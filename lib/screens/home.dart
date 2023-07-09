@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo_app/model/todo.dart';
+import '../model/todo.dart';
 import '../constants/colors.dart';
 import '../widgets/todo_item.dart';
 
@@ -12,35 +12,89 @@ class Home extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.tdBGColor,
       appBar: buildAppBar(),
-      body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-        child: Column(
-          children: [
-            searchBox(),
-            Expanded(
-              child: ListView(
-                children: [
-                  Container(
+      body: Stack(
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+            child: Column(
+              children: [
+                searchBox(),
+                Expanded(
+                  child: ListView(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(
+                          top: 50,
+                          bottom: 20,
+                        ),
+                        child: const Text(
+                          "All ToDos",
+                          style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                      for (Todo todo in todoList)
+                        TodoItem(
+                          todo: todo,
+                        ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                     margin: const EdgeInsets.only(
-                      top: 50,
                       bottom: 20,
+                      right: 20,
+                      left: 20,
                     ),
-                    child: const Text(
-                      "All ToDos",
-                      style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.w600,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Colors.grey,
+                          offset: Offset(0.0, 0.0),
+                        ),
+                      ],
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: const TextField(
+                      decoration: InputDecoration(
+                        hintText: "Add a new todo item",
+                        border: InputBorder.none,
                       ),
                     ),
                   ),
-                  TodoItem(),
-                  TodoItem(),
-                  TodoItem(),
-                ],
-              ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(right: 20, bottom: 20),
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    child: Text(
+                      "+",
+                      style: TextStyle(fontSize: 40),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: Size(60, 60),
+                      primary: AppColors.tdBlue,
+                      elevation: 10,
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
+          )
+        ],
       ),
     );
   }
