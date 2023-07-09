@@ -7,6 +7,7 @@ class TodoItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.only(bottom: 20),
       child: ListTile(
         onTap: () {
           print("clicked on todo item");
@@ -38,7 +39,9 @@ class TodoItem extends StatelessWidget {
             borderRadius: BorderRadius.circular(5),
           ),
           child: IconButton(
-            onPressed: () {},
+            onPressed: () {
+              print("clicked delete button");
+            },
             icon: const Icon(
               Icons.delete,
               size: 18,
