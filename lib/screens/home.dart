@@ -77,8 +77,9 @@ class _HomeState extends State<Home> {
                       ],
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: const TextField(
-                      decoration: InputDecoration(
+                    child: TextField(
+                      controller: _todoController,
+                      decoration: const InputDecoration(
                         hintText: "Add a new todo item",
                         border: InputBorder.none,
                       ),
@@ -93,11 +94,13 @@ class _HomeState extends State<Home> {
                       style: TextStyle(fontSize: 40),
                     ),
                     style: ElevatedButton.styleFrom(
-                      minimumSize: Size(60, 60),
+                      minimumSize: const Size(60, 60),
                       primary: AppColors.tdBlue,
                       elevation: 10,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      addTodoItem(_todoController.text);
+                    },
                   ),
                 ),
               ],
@@ -120,6 +123,16 @@ class _HomeState extends State<Home> {
     });
   }
 
+  void addTodoItem(String todo) {
+    setState(() {
+      todoList.add(Todo(
+        id: DateTime.now().millisecondsSinceEpoch.toString(),
+        todoText: todo,
+      ));
+    });
+    _todoController.clear();
+  }
+
   Widget searchBox() {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -128,6 +141,7 @@ class _HomeState extends State<Home> {
         borderRadius: BorderRadius.circular(20),
       ),
       child: TextField(
+        controller: _todoController,
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.all(0),
           prefixIcon: Icon(
